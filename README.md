@@ -1,6 +1,6 @@
-# Shader入门精要练习
-
-### 第四章:
+# 关于我的Shader学习工程, 记录下学习Shader的经历
+## Shader入门精要部分:
+### Shader入门精要练习答案:
 
 #### 4.2.5.1:
 
@@ -51,18 +51,18 @@
 
 1.  ~~(v-p) · x > 0~~ 修正: (x-p) · v > 0 点v为方向矢量 不需要来换算
 2.  ~~结果为-58~~ 修正: -2 在npc后方
-3.  ~~cosγ = `$\frac{\mathbf{(v-p)} \cdot \mathbf{x}}{|\mathbf{(v-p)}||\mathbf{x}|}$`, γ = arcos(cosγ) 如果γ <= φ/2 则玩家在npc视野内~~ 修正: cosγ = `$\frac{\mathbf{(x-p)} \cdot \mathbf{v}}{|\mathbf{(x-p)}||\mathbf{v}|}$`, 如果 cosy < cos`$\frac{\phi}2$` 则不在玩家视野内
+3.  ~~cosγ = $`\frac{\mathbf{(v-p)} \cdot \mathbf{x}}{|\mathbf{(v-p)}||\mathbf{x}|}`$, γ = arcos(cosγ) 如果γ <= φ/2 则玩家在npc视野内~~ 修正: cosγ = $`\frac{\mathbf{(x-p)} \cdot \mathbf{v}}{|\mathbf{(x-p)}||\mathbf{v}|}`$, 如果 cosy < cos$`\frac{\phi}2`$ 则不在玩家视野内
 4.  可以判断 |x-p| 的长度是否超出距离限制, 再结合角度判断
 
 #### 4.3.3.7:
 
-1.  判断 `$\overrightarrow{p1p2} \times \overrightarrow{p1p3}$` 的点积方向, 根据左手坐标系, 为负则三角形为顺时针方向, 为正则三角形为逆时针方向
+1.  判断 $`\overrightarrow{p1p2} \times \overrightarrow{p1p3}`$ 的点积方向, 根据左手坐标系, 为负则三角形为顺时针方向, 为正则三角形为逆时针方向
 
 #### 4.4.6.1:
 
-1.  `$\begin{bmatrix}-1&11\\-2&18\\ \end{bmatrix}$`
+1.  $`\begin{bmatrix}-1&11\\-2&18\\ \end{bmatrix}`$
 2.  不存在
-3.  `$\begin{bmatrix}11\\11\\-6\ \end{bmatrix}$`
+3.  $`\begin{bmatrix}11\\11\\-6\ \end{bmatrix}`$
 
 #### 4.4.6.2:
 
