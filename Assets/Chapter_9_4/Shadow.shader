@@ -1,6 +1,4 @@
-// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
-
-Shader "Unity Shaders Book/Chapter 9/Forward Rendering"
+Shader "Unity Shaders Book/Chapter 9/Shadow"
 {
     Properties
     {
@@ -25,6 +23,7 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering"
 
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
+            #include "AutoLight.cginc"
 
             struct appdata
             {
@@ -39,6 +38,7 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering"
                 float3 worldPos : TEXCOORD0;
                 float3 worldNormal : TEXCOORD1;
                 float2 uv : TEXCOORD2;
+                SHADOW_COORDS(3) //声明用于对阴影纹理采样的坐标 参数为可以用的插值寄存器的索引值
             };
 
             fixed3 _Color;
@@ -54,6 +54,8 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering"
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+                //计算阴影纹理坐标
+                TRANSFER_SHADOW(o);
                 return o;
             }
 
@@ -71,9 +73,12 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering"
                 fixed3 halfDir = normalize(worldLight + viewDir);
                 fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(i.worldNormal, halfDir)), _Gloss);
 
+                //计算阴影值
+                fixed shadow = SHADOW_ATTENUATION(i); 
+
                 //光照衰减系数
                 fixed atten = 1.0;
-                return fixed4(ambient + (diffuse + specular) * atten, 1.0);
+                return fixed4(ambient + (diffuse + specular )* shadow * atten, 1.0);
             }
 
             ENDCG
@@ -130,10 +135,9 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering"
             {
                 fixed3 worldNormal = normalize(i.worldNormal);
                 #ifdef USING_DIRECTIONAL_LIGHT
-                fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
+                    fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
                 #else
-                //如果不是平行光就计算下光照方向
-                fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz - i.worldPos.xyz);
+                    fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz - i.worldPos.xyz);
                 #endif
                 fixed4 texColor = tex2D(_MainTex, i.uv);
                 fixed3 abledo = texColor.rgb * _Color.rgb;
@@ -146,11 +150,10 @@ Shader "Unity Shaders Book/Chapter 9/Forward Rendering"
                 fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(i.worldNormal, halfDir)), _Gloss);
 
                 #ifdef USING_DIRECTIONAL_LIGHT
-                fixed atten = 1.0;
+                    fixed atten = 1.0;
                 #else
-                //通过光照衰减贴图计算光照衰减
-                float3 lightCoord = mul(unity_WorldToLight, float4(i.worldPos, 1)).xyz;
-                fixed atten = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
+                    float3 lightCoord = mul(unity_WorldToLight, float4(i.worldPos, 1)).xyz;
+                    fixed atten = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
                 #endif
                 return fixed4((diffuse + specular) * atten, 1.0);
             }
