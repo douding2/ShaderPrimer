@@ -27,7 +27,7 @@ Shader "Unity Shaders Book/Chapter 9/Shadow"
 
             struct appdata
             {
-                float4 vertex : POSITION;
+                float4 vertex : POSITION; //必须声明为vertex 不然无法计算阴影坐标纹理
                 float3 normal : NORMAL;
                 float4 texcoord : TEXCOORD0;
             };
@@ -47,7 +47,7 @@ Shader "Unity Shaders Book/Chapter 9/Shadow"
             fixed3 _Specular;
             float _Gloss;
 
-            v2f vert (appdata v)
+            v2f vert (appdata v) //这里数据必须命名为v 不然无法计算阴影坐标纹理
             {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
@@ -78,7 +78,7 @@ Shader "Unity Shaders Book/Chapter 9/Shadow"
 
                 //光照衰减系数
                 fixed atten = 1.0;
-                return fixed4(ambient + (diffuse + specular )* shadow * atten, 1.0);
+                return fixed4(ambient + (diffuse + specular ) * shadow * atten, 1.0);
             }
 
             ENDCG

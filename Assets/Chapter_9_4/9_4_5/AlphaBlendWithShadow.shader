@@ -1,6 +1,6 @@
-Shader "Unity Shaders Book/Chapter 8/Alpha Blend"
+Shader "Unity Shaders Book/Chapter 9/Alpha Blend With Shadow"
 {
-    Properties
+   Properties
     {
         _Color ("Color", Color) = (1, 1, 1, 1)
         _MainTex ("Main Texture", 2D) = "white" {}
@@ -20,9 +20,11 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend"
 
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_fwdbase
 
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
+            #include "AutoLight.cginc"
 
             fixed4 _Color;
             sampler2D _MainTex;
@@ -42,6 +44,7 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend"
                 float3 worldNormal : TEXCOORD0;
                 float3 worldPos : TEXCOORD1;
                 float2 uv : TEXCOORD2;
+                TRANSFER_SHADOW(3)
             };
 
 
@@ -52,6 +55,7 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend"
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+                TRANSFER_SHADOW(o);
                 return o;
             }
 
@@ -65,8 +69,8 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend"
 
                 //兰伯特公式计算的漫反射
                 fixed3 diffuse = _LightColor0.rgb * abledo * max(0, dot(worldNormal, worldLight));
-
-                return fixed4(ambient + diffuse, texColor.a * _AlphaScale); 
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+                return fixed4(ambient + diffuse * atten, texColor.a * _AlphaScale); 
             }
 
             ENDCG
@@ -74,6 +78,5 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend"
         
     }
 
-    FallBack "Transparent/VertexLit"
-
+    FallBack "VertexLit"
 }
