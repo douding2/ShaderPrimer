@@ -15,7 +15,7 @@ Shader "Unity Shaders Book/Chapter 6/SpecularPixelLevel"
 
         Pass
         {
-            Tags {"LightModel" = "FowardBase"}
+            Tags {"LightMode" = "ForwardBase"}
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

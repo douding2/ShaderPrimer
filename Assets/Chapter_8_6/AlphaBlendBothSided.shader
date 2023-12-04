@@ -12,7 +12,7 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend Both Sided"
         
         Pass
         {
-            Tags {"LightModel" = "FowardBase"}
+            Tags {"LightMode" = "ForwardBase"}
 
             ZWrite Off
             Blend SrcAlpha OneMinusSrcAlpha
@@ -76,7 +76,7 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend Both Sided"
 
         Pass
         {
-            Tags {"LightModel" = "FowardBase"}
+            Tags {"LightMode" = "ForwardBase"}
 
             ZWrite Off
             Blend SrcAlpha OneMinusSrcAlpha

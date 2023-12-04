@@ -11,7 +11,7 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Test"
         Tags {"Queue" = "AlphaTest" "IgnoreProjector" = "True" "ReanderType" = "TransparentCutout"}
         Pass
         {
-            Tags {"LightModel" = "FowardBase"}
+            Tags {"LightMode" = "ForwardBase"}
             CGPROGRAM
 
             #pragma vertex vert

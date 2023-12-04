@@ -13,7 +13,7 @@ Shader "Unity Shaders Book/Chapter 6/Diffuse Pixel-Level"
 
         Pass
         {
-            Tags {"LightModel" = "FowardBase"}
+            Tags {"LightMode" = "ForwardBase"}
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

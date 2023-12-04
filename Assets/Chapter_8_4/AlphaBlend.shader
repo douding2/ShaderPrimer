@@ -11,7 +11,7 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend"
         Tags {"Queue" = "Transparent" "IgnoreProjector" = "True" "ReanderType" = "Transparent"}
         Pass
         {
-            Tags {"LightModel" = "FowardBase"}
+            Tags {"LightMode" = "ForwardBase"}
 
             ZWrite Off
             Blend SrcAlpha OneMinusSrcAlpha

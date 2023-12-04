@@ -17,7 +17,7 @@ Shader "Unity Shaders Book/Chapter 7/NormalMapWorldSpace"
 
         Pass
         {
-            Tags {"LightModel" = "FowardBase"}
+            Tags {"LightMode" = "ForwardBase"}
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

@@ -39,7 +39,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
-    - _Cutoff: 0.775
+    - _Cutoff: 0.434
     - _Gloss: 20
     - _SpecularScale: 1
     m_Colors:
