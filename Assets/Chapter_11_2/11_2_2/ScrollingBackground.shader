@@ -1,4 +1,4 @@
-Shader "Unity Shaders Book/Chapter 11/Image Sequence Animation"
+Shader "Unity Shaders Book/Chapter 11/Scrolling Background"
 {
     Properties
     {
