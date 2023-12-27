@@ -10,7 +10,7 @@ public class ColorPicker : MonoBehaviour {
 	public BoxCollider pickerCollider;
 
 	private bool m_grab;
-	private Camera m_camera;
+	private Camera m_camera; 
 	private Texture2D m_screenRenderTexture;
 	private static Texture2D m_staticRectTexture;
 	private static GUIStyle m_staticRectStyle;
